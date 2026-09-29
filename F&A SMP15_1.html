@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FRA Exam Practice | 50 Questions (30 Mins)</title>
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-light: #3b82f6;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --warning: #f59e0b;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 60px;
+    }
+
+    /* Top Sticky Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    }
+
+    .header-title h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .header-title p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .timer-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .timer-badge {
+      font-size: 1.15rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: #eff6ff;
+      color: var(--primary-light);
+      border: 1px solid #bfdbfe;
+      letter-spacing: 1px;
+    }
+
+    .timer-badge.warning {
+      background: #fef2f2;
+      color: var(--danger);
+      border-color: #fecaca;
+      animation: pulse 1s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { opacity: 1; }
+      to { opacity: 0.6; }
+    }
+
+    .btn {
+      padding: 8px 18px;
+      border-radius: 8px;
+      border: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-submit {
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-submit:hover {
+      background: #172554;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 24px auto;
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: 1fr 310px;
+      gap: 24px;
+    }
+
+    @media (max-width: 860px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+      .nav-panel {
+        order: -1;
+      }
+    }
+
+    /* Questions Feed */
+    .quiz-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .q-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      scroll-margin-top: 90px;
+    }
+
+    .q-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .q-number {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--primary-light);
+    }
+
+    .q-text {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 18px;
+      color: var(--text);
+    }
+
+    .options-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+      background: #fff;
+    }
+
+    .option-label:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .option-label input[type="radio"] {
+      margin-top: 3px;
+      transform: scale(1.15);
+      cursor: pointer;
+    }
+
+    .option-label.selected {
+      background: #eff6ff;
+      border-color: var(--primary-light);
+    }
+
+    /* Side Navigator Panel */
+    .nav-panel {
+      position: sticky;
+      top: 90px;
+      height: fit-content;
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 20px;
+    }
+
+    .nav-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .q-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .q-bubble {
+      width: 100%;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: #f1f5f9;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+
+    .q-bubble:hover {
+      background: #e2e8f0;
+    }
+
+    .q-bubble.answered {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .legend {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+
+    /* Result Dashboard Modal / Screen */
+    #resultsScreen {
+      display: none;
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 16px;
+    }
+
+    .score-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 32px;
+      text-align: center;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+    }
+
+    .score-headline {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin: 20px 0;
+    }
+
+    .stat-box p:first-child {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+    .stat-box p:last-child {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    /* Review Card Specifics */
+    .review-item {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+    .review-item.correct-item {
+      border-left: 5px solid var(--success);
+    }
+    .review-item.incorrect-item {
+      border-left: 5px solid var(--danger);
+    }
+
+    .explanation-box {
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      background: #f8fafc;
+      border: 1px dashed var(--border);
+      font-size: 0.9rem;
+    }
+    .explanation-box strong {
+      color: var(--primary);
+    }
+
+    .option-review {
+      padding: 8px 12px;
+      margin: 6px 0;
+      border-radius: 6px;
+      font-size: 0.92rem;
+    }
+    .option-review.is-correct {
+      background: #dcfce7;
+      color: #14532d;
+      font-weight: 600;
+    }
+    .option-review.is-wrong-selection {
+      background: #fee2e2;
+      color: #991b1b;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Exam Header -->
+  <header>
+    <div class="header-title">
+      <h1>Financial Reporting & Analysis (FRA) Exam</h1>
+      <p>50 Multiple-Choice Questions | Closed-Book Mode</p>
+    </div>
+    <div class="timer-container" id="headerControls">
+      <div class="timer-badge" id="timerBadge">30:00</div>
+      <button class="btn btn-submit" onclick="confirmSubmit()">Finish Exam</button>
+    </div>
+  </header>
+
+  <!-- Quiz Taking Interface -->
+  <div class="container" id="quizContainer">
+    <main class="quiz-feed" id="questionsFeed"></main>
+
+    <aside class="nav-panel">
+      <div class="nav-title">
+        <span>Question Grid</span>
+        <span id="progressCount" style="font-size: 0.8rem; font-weight: normal; color: var(--text-muted);">0 / 50</span>
+      </div>
+      <div class="q-grid" id="questionGrid"></div>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-dot" style="background: var(--primary);"></div>
+          <span>Answered</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background: #f1f5f9; border: 1px solid #cbd5e1;"></div>
+          <span>Unanswered</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Results & Feedback Dashboard -->
+  <div id="resultsScreen">
+    <div class="score-card">
+      <h2>Exam Completed</h2>
+      <div class="score-headline" id="scoreDisplay">0 / 50</div>
+      <div class="stats-row">
+        <div class="stat-box">
+          <p>Accuracy</p>
+          <p id="accuracyStat">0%</p>
+        </div>
+        <div class="stat-box">
+          <p>Answered</p>
+          <p id="answeredStat">0</p>
+        </div>
+        <div class="stat-box">
+          <p>Time Taken</p>
+          <p id="timeTakenStat">0m 00s</p>
+        </div>
+      </div>
+      <button class="btn btn-submit" onclick="location.reload()">Retake Test</button>
+    </div>
+
+    <h3 style="margin-bottom: 16px;">Detailed Solution & Feedback Review</h3>
+    <div id="reviewFeed"></div>
+  </div>
+
+  <script>
+    // Complete 50-Question Bank Mapped with Backend Keys & Detailed Explanations
+    const quizData = [
+      {
+        q: "Depreciation is charged on long-term assets for this reason:",
+        options: {
+          a: "It is basically about saving funds for future investments.",
+          b: "Every asset has wear and tear. The expense recognizes this fact.",
+          c: "It is the process of allocating the cost of a long-term asset over its useful life.",
+          d: "It is the deferral of an expense."
+        },
+        answer: "c",
+        exp: "Depreciation is an allocation process that matches the cost of an asset to the accounting periods that benefit from its usage (matching principle), not a fund-accumulation mechanism."
+      },
+      {
+        q: "When prepaid expenses are used up during the year, what is the effect on the accounting equation?",
+        options: {
+          a: "Increase in liabilities and decrease in owner's equity",
+          b: "No effect on owner's equity",
+          c: "Increase in assets and increase in owner's equity",
+          d: "Decrease in assets and decrease in owner's equity"
+        },
+        answer: "d",
+        exp: "Using up a prepaid asset converts it into an expense. Expenses decrease Owner's Equity, and the asset (Prepaid Expense) decreases."
+      },
+      {
+        q: "On 1st January 2024, the company had cash of ₹1,00,000. During the year, net cash from operating activities was ₹1,50,000, net cash used in investing activities was ₹60,000, and net cash from financing activities was ₹40,000. What is the cash balance on 31st December 2024?",
+        options: {
+          a: "₹2,30,000",
+          b: "₹1,90,000",
+          c: "₹2,50,000",
+          d: "₹1,30,000"
+        },
+        answer: "a",
+        exp: "Closing Cash = ₹1,00,000 (Opening) + ₹1,50,000 (CFO) − ₹60,000 (CFI) + ₹40,000 (CFF) = ₹2,30,000."
+      },
+      {
+        q: "On 31st December 2024, an Indian company declared and paid ₹60,000 in dividends. How does this affect the statement of cash flows and owner's equity?",
+        options: {
+          a: "Operating outflow; decreases owner's equity",
+          b: "Investing outflow; decreases assets",
+          c: "Operating inflow; increases assets",
+          d: "Financing outflow; decreases owner's equity"
+        },
+        answer: "d",
+        exp: "Paying dividends represents a distribution to equity holders (Cash Flow from Financing Outflow) and directly reduces Retained Earnings (Owner's Equity)."
+      },
+      {
+        q: "On 15th February 2024, the company pays ₹20,000 for insurance covering March to August 2024. What is the effect on assets on 15th February 2024?",
+        options: {
+          a: "No entry to be made",
+          b: "Assets decrease ₹20,000; expenses increase ₹20,000",
+          c: "Cash decreases ₹20,000; prepaid insurance (asset) increases ₹20,000",
+          d: "Assets increase ₹20,000; expenses decrease ₹20,000"
+        },
+        answer: "c",
+        exp: "This is an asset exchange: Cash decreases by ₹20,000 and Prepaid Insurance (another asset) increases by ₹20,000. Net asset change is zero."
+      },
+      {
+        q: "If a company pays dividends declared earlier to owners, what is the effect on the accounting equation?",
+        options: {
+          a: "Decreases liabilities and increases owner's equity",
+          b: "Decreases assets and decreases liabilities",
+          c: "Increases assets and increases owner's equity",
+          d: "Decreases assets and decreases owner's equity"
+        },
+        answer: "b",
+        exp: "The dividend was already deducted from equity when declared (creating Dividends Payable). Paying it now reduces Cash (asset) and settles Dividends Payable (liability)."
+      },
+      {
+        q: "Which of the following best describes a 'transaction' in accounting?",
+        options: {
+          a: "Any event that affects only cash",
+          b: "Any event that affects the accounting equation (assets, liabilities, owner's equity)",
+          c: "Only events involving external parties",
+          d: "Only events recorded at the end of the year"
+        },
+        answer: "b",
+        exp: "An economic transaction is recognized in financial accounting if it has a measurable monetary impact on the elements of the accounting equation."
+      },
+      {
+        q: "On 28th February 2025, the company sells inventory costing ₹10,000 for ₹15,000 cash. What is the effect on assets and owner's equity?",
+        options: {
+          a: "Assets increase ₹10,000; liabilities increase ₹5,000",
+          b: "Assets increase ₹5,000; owner's equity increases ₹5,000",
+          c: "Assets increase ₹5,000; liabilities increase ₹5,000",
+          d: "Assets increase ₹15,000; owner's equity increases ₹15,000"
+        },
+        answer: "b",
+        exp: "Cash increases by ₹15,000 and Inventory decreases by ₹10,000 (net asset change +₹5,000). The profit of ₹5,000 flows into Retained Earnings (Owner's Equity +₹5,000)."
+      },
+      {
+        q: "Why is it necessary to recognize unearned revenue as a liability when cash is received in advance?",
+        options: {
+          a: "Because it decreases assets.",
+          b: "Because the company has an obligation to provide goods or services in the future.",
+          c: "Because it is not considered a real transaction.",
+          d: "Because it increases owner's equity immediately."
+        },
+        answer: "b",
+        exp: "Cash received before performance creates an obligation to deliver products or perform services, satisfying the definition of a liability."
+      },
+      {
+        q: "If a company's inventory turnover ratio is significantly lower than the industry average, what is the most plausible explanation?",
+        options: {
+          a: "The company's owner's equity is understated.",
+          b: "The company's fixed assets are overvalued.",
+          c: "The company is holding excess inventory.",
+          d: "The company is selling inventory too quickly."
+        },
+        answer: "c",
+        exp: "Inventory turnover is COGS ÷ Average Inventory. A low turnover ratio implies inventory is moving slowly or excess/obsolete stock is piling up."
+      },
+      {
+        q: "A company's owner's equity at the start of 2024 was ₹9,00,000. During the year, net income was ₹2,40,000 and dividends declared were ₹60,000. How much is owner's equity on 31st December 2024?",
+        options: {
+          a: "₹11,40,000",
+          b: "₹9,60,000",
+          c: "₹10,20,000",
+          d: "₹10,80,000"
+        },
+        answer: "d",
+        exp: "Ending Equity = ₹9,00,000 (Beginning) + ₹2,40,000 (Net Income) − ₹60,000 (Dividends) = ₹10,80,000."
+      },
+      {
+        q: "Which of the following transactions will not affect owner's equity?",
+        options: {
+          a: "Paying rent expense",
+          b: "Earning revenue",
+          c: "Borrowing money from a bank",
+          d: "Paying salaries"
+        },
+        answer: "c",
+        exp: "Borrowing money debits Cash (Assets) and credits Bank Loan (Liabilities). Neither revenues, expenses, nor owner capital are impacted."
+      },
+      {
+        q: "A company sold land for ₹4,00,000 cash on 31st August 2024. The land had a book value of ₹3,50,000. What is the cash inflow from investing activities and the effect on owner's equity?",
+        options: {
+          a: "₹4,00,000 inflow; owner's equity increases by ₹50,000",
+          b: "₹50,000 inflow; owner's equity increases by ₹4,00,000",
+          c: "₹3,50,000 inflow; owner's equity unchanged",
+          d: "₹4,00,000 inflow; owner's equity decreases by ₹50,000"
+        },
+        answer: "a",
+        exp: "The full gross cash proceeds of ₹4,00,000 are recorded under Cash Flow from Investing Activities. The gain on sale (₹4,00,000 − ₹3,50,000 = ₹50,000) increases Owner's Equity."
+      },
+      {
+        q: "If a company receives cash in advance for services to be performed later, how is the accounting equation affected?",
+        options: {
+          a: "Assets and owner's equity increase",
+          b: "Liabilities decrease, owner's equity increases",
+          c: "Assets and liabilities increase",
+          d: "Only assets increase"
+        },
+        answer: "c",
+        exp: "Cash increases (Assets increase) and Unearned Revenue increases (Liabilities increase)."
+      },
+      {
+        q: "Which of the following transactions is not reported in the statement of cash flows as a cash flow from investing activities?",
+        options: {
+          a: "Selling a depreciable asset for cash at a loss.",
+          b: "Purchasing a patent using cash.",
+          c: "Purchasing land in exchange for common stock.",
+          d: "Purchasing shares of common stock of another company using cash."
+        },
+        answer: "c",
+        exp: "Acquiring property by directly issuing shares is a non-cash investing/financing transaction. It is reported in schedule disclosures rather than the cash flow statement proper."
+      },
+      {
+        q: "Which of the following best describes an operating activity in the context of a cash flow statement?",
+        options: {
+          a: "Paying salaries to employees",
+          b: "Borrowing funds from a bank",
+          c: "Issuing shares to owners",
+          d: "Purchasing equipment for cash"
+        },
+        answer: "a",
+        exp: "Salary payments are operational expenses incurred directly in core revenue-generating business activities."
+      },
+      {
+        q: "If a company's debt-to-equity ratio increases while its return on owners' equity also increases, which is most likely?",
+        options: {
+          a: "The company is increasing financial leverage, which can amplify returns and risk.",
+          b: "The company is reducing its reliance on external financing.",
+          c: "The company's liquidity is improving.",
+          d: "The company is becoming less risky and more profitable."
+        },
+        answer: "a",
+        exp: "Employing more debt (financial leverage) boosts ROE when return on capital exceeds interest rates, but increases financial risk."
+      },
+      {
+        q: "Which of the following ratios is not part of the DuPont model?",
+        options: {
+          a: "Net profit margin",
+          b: "Return on equity",
+          c: "Total asset turnover",
+          d: "Current ratio"
+        },
+        answer: "d",
+        exp: "The DuPont model decomposes Return on Equity into Net Profit Margin × Asset Turnover × Equity Multiplier. Current ratio measures liquidity."
+      },
+      {
+        q: "On 1st January 2024, prepaid rent was ₹36,000 for the year. By 31st December 2024, the company got 100% benefit of this advance payment. What is the effect on assets and owner's equity?",
+        options: {
+          a: "Assets decrease ₹36,000; Owner's equity increases ₹36,000",
+          b: "Assets decrease ₹18,000; Owner's equity decreases ₹18,000",
+          c: "Assets unchanged; Owner's equity decreases ₹36,000",
+          d: "Assets decrease ₹36,000; Owner's equity decreases ₹36,000"
+        },
+        answer: "d",
+        exp: "The asset Prepaid Rent is depleted to zero (-₹36,000) and recognized as an expense, reducing Owner's Equity by ₹36,000."
+      },
+      {
+        q: "Which of the following best describes the accounting equation?",
+        options: {
+          a: "Assets = Owner's Equity − Liabilities",
+          b: "Assets = Liabilities + Owner's Equity",
+          c: "Liabilities = Assets + Owner's Equity",
+          d: "Assets = Revenues − Expenses"
+        },
+        answer: "b",
+        exp: "Assets = Liabilities + Owner's Equity is the fundamental balance sheet equation."
+      },
+      {
+        q: "Which of the following is NOT a limitation of financial statement analysis?",
+        options: {
+          a: "It always reflects current market values.",
+          b: "It can be influenced by accounting policies.",
+          c: "It may ignore qualitative factors.",
+          d: "It is affected by personal bias."
+        },
+        answer: "a",
+        exp: "Financial statements are recorded primarily at historical cost and do NOT reflect market values. Stating that they 'always reflect current market values' is false, making it not a true limitation."
+      },
+      {
+        q: "If a company's current ratio is high but its quick ratio is low, what might this indicate?",
+        options: {
+          a: "The company has a strong cash position.",
+          b: "The company has no short-term liabilities.",
+          c: "The company's current assets are mostly in inventory.",
+          d: "The company's current assets are mostly in cash and short-term investments."
+        },
+        answer: "c",
+        exp: "Quick Ratio excludes inventory. A major disparity between Current Ratio and Quick Ratio implies a heavy concentration of assets tied up in inventory."
+      },
+      {
+        q: "On 31st December 2024, why must revenue earned but not yet billed be included in the financial statements?",
+        options: {
+          a: "It ensures that earnings reflect all earned revenues during an accounting period.",
+          b: "It is a good opportunity to show more profits.",
+          c: "It is not necessary to include it as billing is pending.",
+          d: "It increases liabilities."
+        },
+        answer: "a",
+        exp: "Under accrual accounting, revenues are recorded when performance obligations are satisfied, ensuring the income statement reflects complete economic activity."
+      },
+      {
+        q: "Which section of the statement of cash flows would include cash received from customers for goods sold?",
+        options: {
+          a: "Investing activities",
+          b: "Operating activities",
+          c: "Supplementary activities",
+          d: "Financing activities"
+        },
+        answer: "b",
+        exp: "Collections from customers represent core operational inflows."
+      },
+      {
+        q: "Which of the following transactions will not affect owner's equity?",
+        options: {
+          a: "Earning revenue",
+          b: "Paying off a loan",
+          c: "Owner withdrawing cash",
+          d: "Paying rent expense"
+        },
+        answer: "b",
+        exp: "Paying off a loan decreases Cash (asset) and Loan Payable (liability). Equity is untouched."
+      },
+      {
+        q: "On 1st January 2024, a company had supplies worth ₹6,000. During the year, it purchased additional supplies for ₹5,000. On 31st December 2024, supplies on hand were ₹2,000. By how much did the supplies balance decrease owner's equity during 2024?",
+        options: {
+          a: "₹2,000",
+          b: "₹9,000",
+          c: "₹4,000",
+          d: "₹11,000"
+        },
+        answer: "b",
+        exp: "Supplies Used = ₹6,000 + ₹5,000 − ₹2,000 = ₹9,000. This expense reduces Owner's Equity by ₹9,000."
+      },
+      {
+        q: "Assets increased by ₹20,000 and liabilities increased by ₹8,000 during a quarter. What is owner's equity at the quarter-end if it was ₹90,000 at the start?",
+        options: {
+          a: "₹1,13,000",
+          b: "₹1,02,000",
+          c: "₹1,05,000",
+          d: "₹1,10,000"
+        },
+        answer: "b",
+        exp: "ΔEquity = ΔAssets − ΔLiabilities = ₹20,000 − ₹8,000 = ₹12,000. Ending Equity = ₹90,000 + ₹12,000 = ₹1,02,000."
+      },
+      {
+        q: "If trade payables (accounts payable) increased by ₹25,000 during 2024, how does this affect cash flows from operating activities (indirect method) and the accounting equation?",
+        options: {
+          a: "Decreases cash flow by ₹25,000; decreases liabilities",
+          b: "Increases cash flow by ₹25,000; decreases owner's equity",
+          c: "Increases cash flow by ₹25,000; decreases liabilities",
+          d: "Increases cash flow by ₹25,000; increases liabilities"
+        },
+        answer: "d",
+        exp: "An increase in payables preserves cash (added back to operating cash flow) and increases liabilities on the balance sheet."
+      },
+      {
+        q: "On 30th June 2024, the company's assets are Rs.2,00,000 and liabilities are Rs.80,000. How much is owners' equity?",
+        options: {
+          a: "Rs.1,20,000",
+          b: "Rs.2,80,000",
+          c: "Rs.80,000",
+          d: "Rs.2,00,000"
+        },
+        answer: "a",
+        exp: "Owner's Equity = Assets (₹2,00,000) − Liabilities (₹80,000) = ₹1,20,000."
+      },
+      {
+        q: "Which of the following is an example of an entry that increases both assets and owner's equity at the end of a year?",
+        options: {
+          a: "Recording receivable revenue",
+          b: "Recording prepaid rent benefit",
+          c: "Recognizing depreciation",
+          d: "Recording unearned revenue earned"
+        },
+        answer: "a",
+        exp: "Accruing uncollected revenue debits Accounts Receivable (+Asset) and credits Revenue (+Owner's Equity)."
+      },
+      {
+        q: "On 1st December 2024, a company received ₹18,000 for 3 months' rent in advance. Which of the following is true on December 31, 2024?",
+        options: {
+          a: "Unearned Rental is ₹18,000.",
+          b: "Rental income is ₹18,000 for 2024.",
+          c: "Rental income is ₹6,000 for 2024.",
+          d: "Unearned Rental is ₹12,000."
+        },
+        answer: "d",
+        exp: "Rent is ₹6,000/month. By Dec 31, 1 month is earned (₹6,000), leaving 2 months (Jan & Feb = ₹12,000) as unearned liability."
+      },
+      {
+        q: "A company reported an increase in accrued sales revenues and a decrease in unearned sales revenues during 2024. Which of the following statements is correct?",
+        options: {
+          a: "When determining cash collected from customers, both the increase in accrued revenues and the decrease in unearned revenues are added to sales revenues.",
+          b: "When determining cash collected from customers, the increase in accrued revenues is subtracted from sales revenues and the decrease in unearned revenues is added to sales revenues.",
+          c: "When determining cash collected from customers, both the increase in accrued revenues and the decrease in unearned revenues are subtracted from sales revenues.",
+          d: "When determining cash collected from customers, the increase in accrued revenues is added to sales revenues and the decrease in unearned revenues is subtracted from sales revenues."
+        },
+        answer: "c",
+        exp: "Cash Collected = Sales − ΔAccrued Revenues − ΔUnearned Revenues. An increase in accrued revenues and a decrease in unearned revenues are both subtracted."
+      },
+      {
+        q: "If a company fails to record an expense that has been incurred but not yet paid by 31st December 2024, what is the impact on the accounting equation?",
+        options: {
+          a: "Liabilities are overstated.",
+          b: "Assets are understated.",
+          c: "Owner's equity is understated.",
+          d: "Owner's equity is overstated."
+        },
+        answer: "d",
+        exp: "Failing to record an expense understates total expenses, causing net income and Owner's Equity to be overstated."
+      },
+      {
+        q: "An Indian company will show interest receipt in ________ category of the cash flow statement.",
+        options: {
+          a: "No effect on cash flow statement",
+          b: "Investing",
+          c: "Operating",
+          d: "Financing"
+        },
+        answer: "b",
+        exp: "Under Indian Accounting Standards (AS 3 / Ind AS 7 for non-financial companies), interest received is treated as cash flow from investing activities."
+      },
+      {
+        q: "If a company receives an electricity bill for ₹8,000 in March but pays it in April, what is the effect in March?",
+        options: {
+          a: "No effect until payment is made",
+          b: "Assets increase, owner's equity increases",
+          c: "Assets decrease, liabilities decrease",
+          d: "Liabilities increase, owner's equity decreases"
+        },
+        answer: "d",
+        exp: "Accruing the expense in March increases Utilities Payable (Liabilities increase) and recognizes expense (Owner's Equity decreases)."
+      },
+      {
+        q: "On 1st January 2025, a company has cash of ₹1,50,000 and accounts receivable of ₹50,000. During January 2025, it performs services worth ₹40,000 on account. What are total assets on 31st January 2025 (assuming no other changes)?",
+        options: {
+          a: "₹2,40,000",
+          b: "₹2,00,000",
+          c: "₹2,10,000",
+          d: "₹1,90,000"
+        },
+        answer: "a",
+        exp: "Total Assets = Initial Cash (₹1,50,000) + Initial AR (₹50,000) + New Services on Account (₹40,000) = ₹2,40,000."
+      },
+      {
+        q: "Why is depreciation expense added back to net income in the operating activities section under the indirect method?",
+        options: {
+          a: "Because it is a non-cash expense.",
+          b: "Because it increases cash.",
+          c: "Because it is an investing activity.",
+          d: "Because it increases owner's equity."
+        },
+        answer: "a",
+        exp: "Depreciation reduces accounting net income but does not use cash. Hence, it is added back to reconcile net income to operational cash flow."
+      },
+      {
+        q: "On 1st January 2024, equipment worth ₹2,00,000 was purchased (5-year life). What is the effect on assets and owner's equity on 31st December 2024 due to depreciation?",
+        options: {
+          a: "Assets decrease ₹40,000; Owner's equity unchanged",
+          b: "Assets decrease ₹40,000; Owner's equity decreases ₹40,000",
+          c: "Assets decrease ₹20,000; Owner's equity decreases ₹20,000",
+          d: "Assets decrease ₹2,00,000; Owner's equity decreases ₹2,00,000"
+        },
+        answer: "b",
+        exp: "Annual depreciation = ₹2,00,000 ÷ 5 = ₹40,000. Accumulated depreciation reduces net assets by ₹40,000, and depreciation expense reduces Owner's Equity by ₹40,000."
+      },
+      {
+        q: "Which of the following statements about owner's equity is correct?",
+        options: {
+          a: "It is unaffected by changes in liabilities.",
+          b: "It always increases when total assets increase.",
+          c: "It cannot be negative.",
+          d: "It can decrease if the company incurs a net loss."
+        },
+        answer: "d",
+        exp: "Net losses reduce retained earnings, thereby reducing Owner's Equity."
+      },
+      {
+        q: "Interest of ₹7,500 has accrued on a loan as of 31st December 2024 but is not yet paid. How does this affect the accounting equation?",
+        options: {
+          a: "Liabilities increase ₹7,500; Owner's equity decreases ₹7,500",
+          b: "Liabilities increase ₹7,500; Assets increase ₹7,500",
+          c: "Assets decrease ₹7,500; Owner's equity decreases ₹7,500",
+          d: "Assets decrease ₹7,500; Liabilities decrease ₹7,500"
+        },
+        answer: "a",
+        exp: "Interest expense reduces Owner's Equity (-₹7,500), and accrued interest payable increases Liabilities (+₹7,500)."
+      },
+      {
+        q: "Which of the following is not an operating activity in the context of a cash flow statement?",
+        options: {
+          a: "Selling goods for cash",
+          b: "Borrowing money from a bank",
+          c: "Collecting accounts receivable",
+          d: "Paying suppliers for inventory"
+        },
+        answer: "b",
+        exp: "Borrowing money from a financial institution is classified as a Financing Activity."
+      },
+      {
+        q: "On 1st January 2024, accounts receivable was ₹50,000. By 31st December 2024, it increased to ₹70,000. If sales for the year were ₹4,00,000, how much cash was collected from customers during 2024?",
+        options: {
+          a: "₹3,30,000",
+          b: "₹3,80,000",
+          c: "₹4,20,000",
+          d: "₹4,00,000"
+        },
+        answer: "b",
+        exp: "Cash Collections = Sales (₹4,00,000) − Increase in AR (₹70,000 − ₹50,000 = ₹20,000) = ₹3,80,000."
+      },
+      {
+        q: "An Indian company will show interest paid in ________ category of the cash flow statement.",
+        options: {
+          a: "No effect on cash flow statement",
+          b: "Financing",
+          c: "Operating",
+          d: "Investing"
+        },
+        answer: "b",
+        exp: "Under Indian Accounting Standards (AS 3 / Ind AS 7 for non-financial companies), interest paid is classified under Financing activities."
+      },
+      {
+        q: "If a company's earnings are positive but its cash flow from operations is negative, what does this definitely suggest?",
+        options: {
+          a: "The company's liabilities are increasing.",
+          b: "The company is not liquid.",
+          c: "The company is undergoing restructuring.",
+          d: "The company has funds blocked in receivables and inventory."
+        },
+        answer: "d",
+        exp: "When accounting net profit is positive but operational cash flow is negative, cash has been absorbed by increases in operating current assets (inventory and receivables)."
+      },
+      {
+        q: "On 31st December 2024, a company reports net income of ₹1,80,000 for the year 2024. Depreciation expense for the year is ₹40,000. How much is the cash flow from operations for the year?",
+        options: {
+          a: "₹2,20,000",
+          b: "₹1,40,000",
+          c: "₹40,000",
+          d: "₹1,80,000"
+        },
+        answer: "a",
+        exp: "Cash Flow from Operations = Net Income (₹1,80,000) + Non-cash Depreciation (₹40,000) = ₹2,20,000."
+      },
+      {
+        q: "What is the main purpose of the statement of cash flows?",
+        options: {
+          a: "To show profitability",
+          b: "To show only non-cash transactions",
+          c: "To show changes in cash and cash equivalents from operating, investing, and financing activities",
+          d: "To show owner's equity only"
+        },
+        answer: "c",
+        exp: "The statement of cash flows summarizes historical inflows and outflows of cash and equivalents across operating, investing, and financing categories."
+      },
+      {
+        q: "If a company pays off a portion of its accounts payable, what is the effect on the accounting equation?",
+        options: {
+          a: "Owner's equity increases",
+          b: "No effect",
+          c: "Assets and liabilities decrease",
+          d: "Liabilities increase, assets increase"
+        },
+        answer: "c",
+        exp: "Cash decreases (Asset decreases) and Accounts Payable decreases (Liability decreases)."
+      },
+      {
+        q: "When comparing two companies in the same industry, which tool best adjusts for size differences?",
+        options: {
+          a: "Common-size analysis",
+          b: "Trend analysis",
+          c: "Working capital analysis",
+          d: "Cash flow analysis"
+        },
+        answer: "a",
+        exp: "Common-size statements express balance sheet and income statement items as percentages of total assets or net sales, normalizing differences in firm scale."
+      },
+      {
+        q: "On 31st December 2024, inventory increased by ₹30,000 compared to the previous year-end. How does this affect cash flows from operating activities (indirect method) in 2024?",
+        options: {
+          a: "Increase by ₹60,000",
+          b: "Increase by ₹30,000",
+          c: "Decrease by ₹30,000",
+          d: "No effect"
+        },
+        answer: "c",
+        exp: "An increase in inventory represents cash invested in unsold stock, so it is deducted (-₹30,000) from net income under the indirect method."
+      },
+      {
+        q: "If a company pays interest on a bank loan on the due date, how does this affect the accounting equation?",
+        options: {
+          a: "Assets decrease, liabilities decrease",
+          b: "Assets decrease, owner's equity decreases",
+          c: "Assets increase, liabilities increase",
+          d: "Liabilities decrease, owner's equity increases"
+        },
+        answer: "b",
+        exp: "Paying interest reduces Cash (-Asset) and is recognized as an interest expense, decreasing net income and Owner's Equity (-Equity)."
+      }
+    ];
+
+    // User State
+    let userAnswers = {};
+    let totalSeconds = 30 * 60; // 30 Minutes
+    let timerInterval = null;
+
+    // Initialize Quiz
+    function initQuiz() {
+      const feed = document.getElementById("questionsFeed");
+      const grid = document.getElementById("questionGrid");
+
+      quizData.forEach((item, index) => {
+        const qIndex = index + 1;
+
+        // Create Question Card
+        const card = document.createElement("div");
+        card.className = "q-card";
+        card.id = `qCard_${qIndex}`;
+        card.innerHTML = `
+          <div class="q-meta">
+            <span class="q-number">Question ${qIndex} of 50</span>
+          </div>
+          <div class="q-text">${item.q}</div>
+          <div class="options-group">
+            ${Object.entries(item.options).map(([key, text]) => `
+              <label class="option-label" id="label_${qIndex}_${key}">
+                <input type="radio" name="q_${qIndex}" value="${key}" onchange="selectOption(${qIndex}, '${key}')" />
+                <span><strong>${key.toUpperCase()}.</strong>${text}</span>
+              </label>
+            `).join("")}
+          </div>
+        `;
+        feed.appendChild(card);
+
+        // Create Navigator Grid Bubble
+        const bubble = document.createElement("a");
+        bubble.className = "q-bubble";
+        bubble.id = `bubble_${qIndex}`;
+        bubble.innerText = qIndex;
+        bubble.href = `#qCard_${qIndex}`;
+        grid.appendChild(bubble);
+      });
+
+      startTimer();
+    }
+
+    // Handle Option Selection
+    function selectOption(qNum, selectedKey) {
+      userAnswers[qNum] = selectedKey;
+
+      // Update styling
+      ['a', 'b', 'c', 'd'].forEach(k => {
+        const label = document.getElementById(`label_${qNum}_${k}`);
+        if (label) label.classList.remove("selected");
+      });
+      const chosenLabel = document.getElementById(`label_${qNum}_${selectedKey}`);
+      if (chosenLabel) chosenLabel.classList.add("selected");
+
+      // Update grid bubble
+      const bubble = document.getElementById(`bubble_${qNum}`);
+      if (bubble) bubble.classList.add("answered");
+
+      // Update progress count
+      const answeredCount = Object.keys(userAnswers).length;
+      document.getElementById("progressCount").innerText = `${answeredCount} / 50`;
+    }
+
+    // Timer Logic
+    function startTimer() {
+      const badge = document.getElementById("timerBadge");
+      timerInterval = setInterval(() => {
+        totalSeconds--;
+        if (totalSeconds <= 0) {
+          clearInterval(timerInterval);
+          finishExam(true);
+          return;
+        }
+
+        const mins = Math.floor(totalSeconds / 60);
+        const secs = totalSeconds % 60;
+        badge.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+        if (totalSeconds <= 300) { // < 5 mins warning
+          badge.classList.add("warning");
+        }
+      }, 1000);
+    }
+
+    // Confirmation Prompt
+    function confirmSubmit() {
+      const answered = Object.keys(userAnswers).length;
+      const unattempted = 50 - answered;
+      const msg = unattempted > 0 
+        ? `You have answered ${answered} questions. You still have ${unattempted} unanswered question(s).\n\nAre you sure you want to finish and submit?`
+        : "Are you sure you want to finish the exam and view your score?";
+      if (confirm(msg)) {
+        finishExam(false);
+      }
+    }
+
+    // Evaluation & Results Display
+    function finishExam(isTimeOut) {
+      clearInterval(timerInterval);
+
+      if (isTimeOut) {
+        alert("Time is up! Your exam has been automatically submitted.");
+      }
+
+      // Hide test screen & show result screen
+      document.getElementById("quizContainer").style.display = "none";
+      document.getElementById("headerControls").style.display = "none";
+      document.getElementById("resultsScreen").style.display = "block";
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      let score = 0;
+      const reviewContainer = document.getElementById("reviewFeed");
+      reviewContainer.innerHTML = "";
+
+      quizData.forEach((item, index) => {
+        const qNum = index + 1;
+        const userChoice = userAnswers[qNum] || null;
+        const isCorrect = userChoice === item.answer;
+
+        if (isCorrect) score++;
+
+        const reviewCard = document.createElement("div");
+        reviewCard.className = `review-item ${isCorrect ? 'correct-item' : 'incorrect-item'}`;
+        
+        let statusBadge = isCorrect 
+          ? `<span style="color: var(--success); font-weight: 700;">✓ Correct</span>`
+          : `<span style="color: var(--danger); font-weight: 700;">✗ ${userChoice ? 'Incorrect' : 'Unattempted'}</span>`;
+
+        reviewCard.innerHTML = `
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="font-weight: 700; color: var(--text-muted);">Question ${qNum}</span>
+            ${statusBadge}
+          </div>
+          <div style="font-weight: 600; font-size: 1rem; margin-bottom: 12px;">${item.q}</div>
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            ${Object.entries(item.options).map(([k, text]) => {
+              let optClass = "option-review";
+              if (k === item.answer) optClass += " is-correct";
+              if (userChoice === k && !isCorrect) optClass += " is-wrong-selection";
+              
+              let marker = "";
+              if (k === item.answer) marker = " (Correct Answer)";
+              if (userChoice === k && !isCorrect) marker = " (Your Selection)";
+              if (userChoice === k && isCorrect) marker = " (Your Selection ✓)";
+
+              return `<div class="${optClass}"><strong>${k.toUpperCase()}.</strong> ${text}${marker}</div>`;
+            }).join("")}
+          </div>
+          <div class="explanation-box">
+            <strong>Accounting Explanation:</strong> ${item.exp}
+          </div>
+        `;
+        reviewContainer.appendChild(reviewCard);
+      });
+
+      // Update Summary Cards
+      const elapsed = (30 * 60) - totalSeconds;
+      const elapsedMins = Math.floor(elapsed / 60);
+      const elapsedSecs = elapsed % 60;
+
+      document.getElementById("scoreDisplay").innerText = `${score} / 50`;
+      document.getElementById("accuracyStat").innerText = `${Math.round((score / 50) * 100)}%`;
+      document.getElementById("answeredStat").innerText = `${Object.keys(userAnswers).length} / 50`;
+      document.getElementById("timeTakenStat").innerText = `${elapsedMins}m ${elapsedSecs.toString().padStart(2, '0')}s`;
+    }
+
+    // Launch
+    window.onload = initQuiz;
+  </script>
+</body>
+</html>
